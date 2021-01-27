@@ -1,0 +1,30 @@
+<template>
+  <div>
+    <LoginForm />
+  </div>
+</template>
+
+<script>
+import LoginForm from '../components/login/LoginForm';
+
+export default {
+  components: {
+    LoginForm,
+  },
+  created() {
+    if (this.$auth.loggedIn) {
+      this.$router.replace({ name: 'index' });
+    }
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
