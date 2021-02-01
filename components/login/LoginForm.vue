@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="login">
     <h1>Administration</h1>
-    <p ref="errorMessage" class="error-message">&nbsp;</p>
+    <p class="error-message" :class="{ show: errorMessage }">
+      {{ errorMessage }}
+    </p>
     <input
       v-model="form.username"
       type="username"
@@ -27,20 +29,18 @@ export default {
         username: '',
         password: '',
       },
+      errorMessage: '',
     };
   },
   methods: {
     login() {
       this.$auth
         .loginWith('local', {
-          data: {
-            username: this.form.username,
-            password: this.form.password,
-          },
+          data: this.form,
         })
         .catch((err) => {
-          this.$refs.errorMessage.innerHTML = err.response.data;
-          this.$refs.errorMessage.classList.add('show');
+          console.log(err.data);
+          this.errorMessage = err.response.data.message;
         });
     },
   },
@@ -65,24 +65,24 @@ form {
   }
 
   .error-message {
-    max-height: 0;
     opacity: 0;
     width: 100%;
     border-radius: 0.3rem;
     background-color: rgba(255, 0, 0, 0.2);
-    margin: 0.5rem 0;
     color: red;
     font-size: 0.8rem;
     text-align: center;
     overflow: hidden;
-    transition-property: max-height, padding, opacity;
+    max-height: 0;
+    transition-property: max-height, padding, margin, opacity;
     transition-duration: 0.1s;
-    transition-delay: 0s, 0s, 0.1s;
+    transition-delay: 0s, 0s, 0s, 0.1s;
     transition-timing-function: ease-in-out;
 
     &.show {
       max-height: 100px;
       padding: 0.5rem;
+      margin: 0.5rem 0;
       border: 2px solid red;
       opacity: 1;
     }
@@ -98,7 +98,7 @@ form {
       margin: 0.5rem 0;
       background-color: $white;
       padding: 0.5rem;
-      font-size: 1rem;
+      font-size: 0.8rem;
       font-family: $font-family;
     }
 

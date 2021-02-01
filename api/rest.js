@@ -26,7 +26,7 @@ mongoose
       const adminUser = new AdminUser({
         username: 'admin',
         password: hashedPassword,
-        scope: 'admin',
+        scope: ['user', 'admin'],
       });
       try {
         // save new admin user

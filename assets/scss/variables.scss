@@ -7,7 +7,13 @@ $lightgray: #cdcdcd;
 $darkgray: #303030;
 
 // widgets
-$widget-box-shadow: 0 0 20 rgba(0, 0, 0, 0.25);
+$widget-box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 $widget-border-radius: 0.5rem;
 
-$login-width: 350px;
+// login
+$login-width: 330px;
+
+// index
+$menu-selector-height: 60px;
+$menu-selector-width: 300px;
+$menu-selector-button-size: 30px;

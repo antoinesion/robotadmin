@@ -13,9 +13,8 @@ const AdminUserSchema = new mongoose.Schema({
     max: 128,
   },
   scope: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
+    type: Array,
+    default: ['user'],
   },
 });
 

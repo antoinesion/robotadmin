@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <LoginForm />
   </div>
 </template>
@@ -19,8 +19,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-div {
+<style lang="scss">
+.container {
   width: 100%;
   height: 100%;
   display: flex;
