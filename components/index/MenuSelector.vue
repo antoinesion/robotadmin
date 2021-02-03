@@ -19,11 +19,11 @@
       @click="onClick('employees')"
     ></button>
     <button
-      v-if="this.$auth.hasScope('admin')"
-      id="administrators"
-      :class="{ selected: selectedMenu == 'administrators' }"
-      title="Manage administrators"
-      @click="onClick('administrators')"
+      v-if="this.$auth.hasScope('super-admin')"
+      id="admin-users"
+      :class="{ selected: selectedMenu == 'admin-users' }"
+      title="Manage administration users"
+      @click="onClick('admin-users')"
     ></button>
     <button
       id="settings"
@@ -43,14 +43,14 @@ export default {
     },
   },
   created() {
-    this.$store.commit('menu/setSelectedMenu', null);
+    this.$store.commit('menu/selectMenu', null);
   },
   methods: {
     onClick: function (menu) {
       if (this.selectedMenu == menu) {
-        this.$store.commit('menu/setSelectedMenu', null);
+        this.$store.commit('menu/selectMenu', null);
       } else {
-        this.$store.commit('menu/setSelectedMenu', menu);
+        this.$store.commit('menu/selectMenu', menu);
       }
     },
   },
@@ -72,6 +72,7 @@ div {
     height: $menu-selector-button-size;
     margin: 0 0.4rem;
     opacity: 0.8;
+    will-change: filter;
 
     &#logs {
       background: no-repeat center/100% url('../../assets/icons/logs.svg');
@@ -97,9 +98,9 @@ div {
       }
     }
 
-    &#administrators {
+    &#admin-users {
       background: no-repeat center/100%
-        url('../../assets/icons/administrators.svg');
+        url('../../assets/icons/admin-users.svg');
 
       &.selected:hover {
         background-image: url('../../assets/icons/quit.svg');

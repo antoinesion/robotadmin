@@ -26,7 +26,7 @@ mongoose
       const adminUser = new AdminUser({
         username: 'admin',
         password: hashedPassword,
-        scope: ['user', 'admin'],
+        scope: ['admin', 'super-admin'],
       });
       try {
         // save new admin user
@@ -47,5 +47,7 @@ app.use(express.json());
 // routes
 const auth = require('./routes/auth');
 app.use('/auth', auth);
+const adminUsers = require('./routes/users');
+app.use('/admin-users', adminUsers);
 
 module.exports = app;

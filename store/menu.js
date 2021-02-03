@@ -3,7 +3,7 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setSelectedMenu: (state, menu) => {
+  selectMenu: (state, menu) => {
     state.selectedMenu = menu;
   },
 };

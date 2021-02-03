@@ -3,7 +3,7 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setShowChangePassword: (state, show) => {
+  showChangePassword: (state, show) => {
     state.showChangePassword = show;
   },
 };

@@ -2,27 +2,17 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const AdminUser = require('../../models/AdminUser');
-const {
-  registerValidator,
-  loginValidator,
-  changePasswordValidator,
-} = require('../../validators/authValidators');
-const {
-  loginRequired,
-  adminRequired,
-} = require('../../middleware/authMiddleware');
+const loginValidator = require('../../validators/loginValidator');
+const changePasswordValidator = require('../../validators/changePasswordValidator');
+const { loginRequired } = require('../../middleware/authMiddleware');
 
 // generate access and refresh tokens
-const generateTokens = (userID) => {
-  const accessToken = jwt.sign(
-    { _id: userID },
-    process.env.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_TIME),
-    }
-  );
+const generateTokens = (_id) => {
+  const accessToken = jwt.sign({ _id: _id }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: parseInt(process.env.ACCESS_TOKEN_EXPIRATION_TIME),
+  });
   const refreshToken = jwt.sign(
-    { _id: userID },
+    { _id: _id },
     process.env.REFRESH_TOKEN_SECRET,
     {
       expiresIn: parseInt(process.env.REFRESH_TOKEN_EXPIRATION_TIME),
@@ -30,45 +20,6 @@ const generateTokens = (userID) => {
   );
   return { access_token: accessToken, refresh_token: refreshToken };
 };
-
-// REGISTER
-router.post('/register', [loginRequired, adminRequired], async (req, res) => {
-  // validate login data
-  const { error } = registerValidator(req.body);
-  if (error) {
-    return res.status(400).send({
-      path: error.details[0].path,
-      message: error.details[0].message,
-    });
-  }
-
-  // checking if the username already exists
-  const usernameExists = await AdminUser.findOne({
-    username: req.body.username,
-  });
-  if (usernameExists) {
-    return res
-      .status(400)
-      .send({ path: ['username'], message: 'Username already exists' });
-  }
-
-  // hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  // create new admin user
-  const adminUser = new AdminUser({
-    username: req.body.username,
-    password: hashedPassword,
-    scope: req.body.scope || 'user',
-  });
-  try {
-    // save new admin user
-    await adminUser.save();
-  } catch (err) {
-    res.status(500).send({ path: [], message: err.message });
-  }
-});
 
 // LOGIN
 router.post('/login', async (req, res) => {
@@ -118,13 +69,11 @@ router.post('/refresh', async (req, res) => {
 
   try {
     // check is the refresh token is valid
-    const userID = await jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET
-    )._id;
+    const _id = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+      ._id;
 
     // generate new access and refresh tokens
-    const newTokens = generateTokens(userID);
+    const newTokens = generateTokens(_id);
 
     // send new tokens
     res.send(newTokens);

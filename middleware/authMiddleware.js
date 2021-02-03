@@ -13,10 +13,10 @@ const loginRequired = async (req, res, next) => {
     const accessToken = bearerToken.split(' ')[1];
 
     // check if the access token is valid
-    const userID = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)._id;
+    const _id = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)._id;
 
     // get the corresponding user
-    const user = await AdminUser.findById(userID);
+    const user = await AdminUser.findById(_id);
 
     // send user information
     req.user = {
@@ -32,7 +32,7 @@ const loginRequired = async (req, res, next) => {
 };
 
 const adminRequired = (req, res, next) => {
-  if (req.user.scope != 'admin')
+  if (!req.user.scope.includes('super-admin'))
     return res
       .status(403)
       .send({ message: 'You must be an admin to perform this action' });

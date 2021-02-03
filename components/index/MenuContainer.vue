@@ -1,19 +1,19 @@
 <template>
   <div class="menu-container">
     <Settings v-if="selectedMenu == 'settings'" />
-    <Administrators v-if="selectedMenu == 'administrators'" />
+    <AdminUsers v-if="selectedMenu == 'admin-users'" />
   </div>
 </template>
 
 <script>
 import Settings from './Settings';
-import Administrators from './Administrators';
+import AdminUsers from './AdminUsers';
 
 export default {
   name: 'MenuContainer',
   components: {
     Settings,
-    Administrators,
+    AdminUsers,
   },
   computed: {
     selectedMenu: function () {

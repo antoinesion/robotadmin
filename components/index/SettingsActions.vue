@@ -13,7 +13,7 @@ export default {
       this.$auth.logout().then(this.$router.replace({ name: 'login' }));
     },
     showChangePassword: function () {
-      this.$store.commit('settings/setShowChangePassword', true);
+      this.$store.commit('settings/showChangePassword', true);
     },
   },
 };

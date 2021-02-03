@@ -6,7 +6,7 @@
     </p>
     <input
       v-model="form.username"
-      type="username"
+      type="text"
       autocomplete="username"
       placeholder="Username"
     />
@@ -92,7 +92,7 @@ form {
     all: unset;
     box-sizing: border-box;
 
-    &[type='username'],
+    &[type='text'],
     &[type='password'] {
       width: 100%;
       margin: 0.5rem 0;

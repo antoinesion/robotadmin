@@ -1,65 +1,72 @@
 <template>
-  <form @submit.prevent="changePassword">
+  <form @submit.prevent="addAdminUser">
     <p :class="{ error: errorMessage, success: successMessage }">
       {{ errorMessage }}{{ successMessage }}
     </p>
     <input
-      v-model="username"
+      ref="username"
+      v-model="form.username"
       type="text"
       autocomplete="username"
-      name="username"
-      style="display: none"
+      placeholder="Username"
     />
     <input
-      ref="currentPassword"
-      v-model="form.currentPassword"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Current password"
-    />
-    <input
-      ref="newPassword"
-      v-model="form.newPassword"
+      ref="password"
+      v-model="form.password"
       type="password"
       autocomplete="new-password"
-      placeholder="New password"
+      placeholder="Password"
     />
     <input
-      ref="confirmNewPassword"
-      v-model="form.confirmNewPassword"
+      ref="confirmPassword"
+      v-model="form.confirmPassword"
       type="password"
       autocomplete="new-password"
-      placeholder="Confirm new password"
+      placeholder="Confirm password"
     />
-    <button type="button" @click="hideChangePassword()">Abort</button>
-    <input type="submit" value="Change password" />
+    <label>
+      <div>
+        <img src="../../assets/icons/super-admin.svg" />
+        <span>Super admin </span>
+      </div>
+      <input
+        id="isSuperAdminCheckbox"
+        v-model="form.isSuperAdmin"
+        type="checkbox"
+      />
+    </label>
+    <button type="button" @click="hideAddAdminUser()">Abort</button>
+    <input type="submit" value="Register" />
   </form>
 </template>
 
 <script>
 export default {
-  name: 'ChangePassword',
+  name: 'AddAdminUser',
   data() {
     return {
-      username: this.$auth.user.username,
       form: {
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        isSuperAdmin: false,
       },
       successMessage: '',
       errorMessage: '',
     };
   },
   methods: {
-    hideChangePassword: function () {
-      this.$store.commit('settings/showChangePassword', false);
+    hideAddAdminUser: function () {
+      this.$get('/api/admin-users/fetch').then((res) => {
+        this.$store.commit('adminUsers/setAdminUsers', res.data);
+      });
+      this.$store.commit('adminUsers/showAddAdminUser', false);
       setTimeout(() => {
         this.resetForm();
       }, 500);
     },
-    changePassword: function () {
-      this.$post('/api/auth/change-password', this.form)
+    addAdminUser: function () {
+      this.$post('/api/admin-users/register', this.form)
         .then((res) => {
           this.resetForm();
           this.successMessage = res.data;
@@ -83,9 +90,10 @@ export default {
       this.errorMessage = '';
       this.successMessage = '';
       this.form = {
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        isSuperAdmin: false,
       };
       this.updateErrorsDisplay([]);
     },
@@ -133,16 +141,17 @@ form {
     }
   }
 
+  input[type='text'],
   input[type='password'] {
     all: unset;
     box-sizing: border-box;
     width: 100%;
-    margin: $basic-margin 0;
+    margin: 0.5rem 0;
     background-color: $white;
     border: 2px solid $lightgray;
-    padding: $basic-padding;
+    padding: 0.5rem;
     font-family: $font-family;
-    font-size: $basic-font-size;
+    font-size: 0.8rem;
 
     &:focus {
       border-color: $darkgray;
@@ -153,17 +162,63 @@ form {
     }
   }
 
+  label {
+    user-select: none;
+    height: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: $basic-margin 0;
+
+    div {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      *:nth-child(1) {
+        margin-right: 0.3rem;
+      }
+
+      span {
+        line-height: 1rem;
+        font-size: $basic-font-size;
+      }
+
+      img {
+        height: 100%;
+        width: auto;
+      }
+    }
+
+    input[type='checkbox'] {
+      all: unset;
+      box-sizing: border-box;
+      height: 100%;
+      width: 1rem;
+      border: 1px solid $lightgray;
+
+      &:checked {
+        border-color: $darkgray;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 75%;
+        background-image: url('../../assets/icons/checked.svg');
+        background-color: $darkgray;
+      }
+    }
+  }
+
   button,
   input[type='submit'] {
     all: unset;
-    border-radius: $basic-border-radius;
+    border-radius: 0.3rem;
     color: $white;
-    font-size: $basic-font-size;
-    padding: $basic-padding;
-    margin-bottom: $basic-margin;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
     cursor: pointer;
-    opacity: $no-hover-opacity;
+    opacity: 0.9;
 
     &:hover {
       opacity: 1;
