@@ -1,66 +1,63 @@
 <template>
-  <form @submit.prevent="changePassword">
-    <h1>Change password</h1>
+  <form @submit.prevent="addEmployee">
+    <h1>Add employee</h1>
     <p :class="{ error: errorMessage, success: successMessage }">
       {{ errorMessage }}{{ successMessage }}
     </p>
     <input
-      v-model="username"
+      ref="firstName"
+      v-model="form.firstName"
       type="text"
-      autocomplete="username"
-      name="username"
-      style="display: none"
+      autocomplete="given-name"
+      placeholder="First name"
     />
     <input
-      ref="currentPassword"
-      v-model="form.currentPassword"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Current password"
+      ref="lastName"
+      v-model="form.lastName"
+      type="text"
+      autocomplete="family-name"
+      placeholder="Last name"
     />
     <input
-      ref="newPassword"
-      v-model="form.newPassword"
-      type="password"
-      autocomplete="new-password"
-      placeholder="New password"
+      ref="email"
+      v-model="form.email"
+      type="text"
+      autocomplete="email"
+      placeholder="Email"
     />
-    <input
-      ref="confirmNewPassword"
-      v-model="form.confirmNewPassword"
-      type="password"
-      autocomplete="new-password"
-      placeholder="Confirm new password"
-    />
-    <button type="button" @click="hideChangePassword()">Back</button>
-    <input type="submit" value="Change password" />
+    <input ref="id" v-model="form.id" type="text" placeholder="ID" />
+    <button type="button" @click="hideAddEmployee()">Back</button>
+    <input type="submit" value="Register" />
   </form>
 </template>
 
 <script>
 export default {
-  name: 'ChangePassword',
+  name: 'AddEmployee',
   data() {
     return {
-      username: this.$auth.user.username,
       form: {
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        id: null,
       },
       successMessage: '',
       errorMessage: '',
     };
   },
   methods: {
-    hideChangePassword: function () {
-      this.$store.commit('settings/showChangePassword', false);
+    hideAddEmployee: function () {
+      this.$get('/api/employees/fetch').then((res) => {
+        this.$store.commit('employees/setEmployees', res.data);
+      });
+      this.$store.commit('employees/changeEmployeeMenu', 'list');
       setTimeout(() => {
         this.resetForm();
       }, 500);
     },
-    changePassword: function () {
-      this.$post('/api/auth/change-password', this.form)
+    addEmployee: function () {
+      this.$post('/api/employees/register', this.form)
         .then((res) => {
           this.resetForm();
           this.successMessage = res.data;
@@ -84,9 +81,10 @@ export default {
       this.errorMessage = '';
       this.successMessage = '';
       this.form = {
-        currentPassword: '',
-        newPassword: '',
-        confirmNewPassword: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        id: null,
       };
       this.updateErrorsDisplay([]);
     },
@@ -138,16 +136,16 @@ form {
     }
   }
 
-  input[type='password'] {
+  input[type='text'] {
     all: unset;
     box-sizing: border-box;
     width: 100%;
-    margin: $basic-margin 0;
+    margin: 0.5rem 0;
     background-color: $white;
     border: 2px solid $lightgray;
-    padding: $basic-padding;
+    padding: 0.5rem;
     font-family: $font-family;
-    font-size: $basic-font-size;
+    font-size: 0.8rem;
 
     &:focus {
       border-color: $darkgray;
@@ -161,14 +159,14 @@ form {
   button,
   input[type='submit'] {
     all: unset;
-    border-radius: $basic-border-radius;
+    border-radius: 0.3rem;
     color: $white;
-    font-size: $basic-font-size;
-    padding: $basic-padding;
-    margin-bottom: $basic-margin;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
     cursor: pointer;
-    opacity: $no-hover-opacity;
+    opacity: 0.9;
 
     &:hover {
       opacity: 1;

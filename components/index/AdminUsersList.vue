@@ -1,8 +1,11 @@
 <template>
   <div>
     <div class="actions">
-      <button id="add" @click="showAddAdminUser"></button>
-      <button id="refresh" @click="fetchAdminUsers"></button>
+      <h1>Admin users</h1>
+      <div>
+        <button id="add" @click="showAddAdminUser"></button>
+        <button id="refresh" @click="fetchAdminUsers"></button>
+      </div>
     </div>
     <ul>
       <li
@@ -73,25 +76,34 @@ div {
 
   .actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: flex-end;
     margin-bottom: $basic-margin;
 
-    button {
-      height: 1.8rem;
-      width: 1.8rem;
+    h1 {
+      margin-bottom: $basic-margin;
+    }
 
-      &:nth-child(1) {
-        margin-right: 0.2rem;
-      }
+    div {
+      display: flex;
 
-      &#add {
-        background: no-repeat center/60% url('../../assets/icons/add.svg'),
-          $darkgray;
-      }
+      button {
+        height: 1.8rem;
+        width: 1.8rem;
 
-      &#refresh {
-        background: no-repeat center/60% url('../../assets/icons/refresh.svg'),
-          $darkgray;
+        &:nth-child(1) {
+          margin-right: 0.2rem;
+        }
+
+        &#add {
+          background: no-repeat center/60% url('../../assets/icons/add.svg'),
+            $darkgray;
+        }
+
+        &#refresh {
+          background: no-repeat center/60% url('../../assets/icons/refresh.svg'),
+            $darkgray;
+        }
       }
     }
   }
@@ -150,8 +162,16 @@ div {
         }
 
         button {
-          opacity: 0;
           pointer-events: none;
+
+          &:nth-child(2) {
+            background: no-repeat center/70%
+              url('../../assets/icons/super-admin-self.svg');
+          }
+
+          &:nth-child(3) {
+            background: none;
+          }
         }
       }
     }

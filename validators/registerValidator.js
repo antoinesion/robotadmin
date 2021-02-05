@@ -8,12 +8,6 @@ const options = {
   },
 };
 
-const noblank = (value, helpers) => {
-  if (value === '4') {
-    return helpers.error('any.invalid');
-  }
-};
-
 const registerValidator = (data) => {
   const schema = Joi.object({
     username: Joi.string().required().max(128).alphanum().label('Username'),

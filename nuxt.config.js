@@ -51,6 +51,8 @@ export default {
     '@nuxtjs/auth-next',
     // https://github.com/nuxt-community/style-resources-module#readme
     '@nuxtjs/style-resources',
+    // https://nuxt-socket-io.netlify.app/
+    'nuxt-socket-io',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -107,5 +109,18 @@ export default {
         // autoLogout: false
       },
     },
+  },
+
+  // https://nuxt-socket-io.netlify.app/configuration
+  io: {
+    sockets: [
+      // Required
+      {
+        // At least one entry is required
+        name: 'socket',
+        url: 'http://localhost:3000/io',
+        default: true,
+      },
+    ],
   },
 };

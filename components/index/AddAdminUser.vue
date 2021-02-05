@@ -1,5 +1,6 @@
 <template>
   <form @submit.prevent="addAdminUser">
+    <h1>Add admin user</h1>
     <p :class="{ error: errorMessage, success: successMessage }">
       {{ errorMessage }}{{ successMessage }}
     </p>
@@ -35,7 +36,7 @@
         type="checkbox"
       />
     </label>
-    <button type="button" @click="hideAddAdminUser()">Abort</button>
+    <button type="button" @click="hideAddAdminUser()">Back</button>
     <input type="submit" value="Register" />
   </form>
 </template>
@@ -106,6 +107,10 @@ form {
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
+
+  h1 {
+    margin-bottom: $basic-margin;
+  }
 
   p {
     opacity: 0;

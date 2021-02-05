@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Settings</h1>
     <button @click="showChangePassword()">Change password</button>
     <button @click="logout()">Log out</button>
   </div>
@@ -24,6 +25,10 @@ div {
   display: flex;
   flex-direction: column;
 
+  h1 {
+    margin-bottom: $basic-margin;
+  }
+
   button {
     all: unset;
     background-color: $darkgray;
@@ -31,14 +36,10 @@ div {
     color: $white;
     font-size: 0.8rem;
     padding: 0.5rem;
-    margin-bottom: 1rem;
+    margin: $basic-margin 0;
     text-align: center;
     cursor: pointer;
     opacity: 0.9;
-
-    &:last-child {
-      margin-bottom: 0rem;
-    }
 
     &:hover {
       opacity: 1;

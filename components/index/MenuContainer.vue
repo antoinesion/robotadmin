@@ -1,7 +1,8 @@
 <template>
   <div class="menu-container">
-    <Settings v-if="selectedMenu == 'settings'" />
+    <Employees v-if="selectedMenu == 'employees'" />
     <AdminUsers v-if="selectedMenu == 'admin-users'" />
+    <Settings v-if="selectedMenu == 'settings'" />
   </div>
 </template>
 

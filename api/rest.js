@@ -49,5 +49,7 @@ const auth = require('./routes/auth');
 app.use('/auth', auth);
 const adminUsers = require('./routes/users');
 app.use('/admin-users', adminUsers);
+const employees = require('./routes/employees');
+app.use('/employees', employees);
 
 module.exports = app;

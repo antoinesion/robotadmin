@@ -21,7 +21,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.11.13",
-    "nuxt": "^2.14.12"
+    "nuxt": "^2.14.12",
+    "nuxt-socket-io": "1.1.13"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",

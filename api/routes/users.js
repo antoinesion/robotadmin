@@ -25,8 +25,7 @@ router.get('/fetch', async (req, res) => {
 
 // REGISTER
 router.post('/register', async (req, res) => {
-  console.log(req.body);
-  // validate login data
+  // validate register data
   const { error } = registerValidator(req.body);
   if (error) {
     return res.status(400).send({
@@ -60,7 +59,6 @@ router.post('/register', async (req, res) => {
     await adminUser.save();
     return res.status(200).send('Admin user has been created');
   } catch (err) {
-    console.error(err);
     return res.status(500).send({ path: [], message: err.message });
   }
 });
@@ -85,7 +83,7 @@ router.put('/modify', async (req, res) => {
     } else {
       return res
         .status(404)
-        .send({ path: '_id', message: 'Wrong admin user ID' });
+        .send({ path: '_id', message: 'Wrong admin user _id' });
     }
   } catch (err) {
     return res.status(500).send(err);
@@ -102,10 +100,9 @@ router.delete('/delete', async (req, res) => {
     } else {
       return res
         .status(404)
-        .send({ path: '_id', message: 'Wrong admin user ID' });
+        .send({ path: '_id', message: 'Wrong admin user _id' });
     }
   } catch (err) {
-    console.log(err);
     return res.status(500).send(err);
   }
 });
