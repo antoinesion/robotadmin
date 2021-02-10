@@ -2,7 +2,6 @@ const router = require('express').Router();
 const Employee = require('../../models/Employee');
 const employeeValidator = require('../../validators/employeeValidator');
 const { loginRequired } = require('../../middleware/authMiddleware');
-const io = require('../../server/io');
 
 // FETCH
 router.get('/fetch', [loginRequired], async (req, res) => {
@@ -104,32 +103,6 @@ router.delete('/delete', [loginRequired], async (req, res) => {
       return res
         .status(404)
         .send({ path: '_id', message: 'Wrong employee _id' });
-    }
-  } catch (err) {
-    return res.status(500).send(err);
-  }
-});
-
-// VERIFY
-router.post('/verify', async (req, res) => {
-  const id = req.body.id;
-  if (!id) {
-    return res
-      .status(400)
-      .send({ path: ['id'], message: 'Employee id is missing' });
-  }
-
-  try {
-    const employee = await Employee.findOne({ id: req.body.id });
-    if (employee) {
-      io.emit('person_identified');
-      return res.status(200).send({
-        firstName: employee.firstName,
-        lastName: employee.lastName,
-        email: employee.email,
-      });
-    } else {
-      return res.status(404).send({ path: 'id', message: 'Wrong employee id' });
     }
   } catch (err) {
     return res.status(500).send(err);

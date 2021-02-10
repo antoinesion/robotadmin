@@ -1,26 +1,60 @@
 const socket = require('socket.io');
-var io;
+const dotenv = require('dotenv');
+const Employee = require('../models/Employee');
+const socketIDs = {};
 
-function emit(event) {
-  io.emit(event);
+dotenv.config();
+
+async function verify(id) {
+  console.log(id);
+  try {
+    const employee = await Employee.findOne({ id: id });
+    if (employee) {
+      return {
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        email: employee.email,
+      };
+    } else {
+      return null;
+    }
+  } catch (err) {
+    return null;
+  }
 }
 
-function setup(server, port) {
-  io = socket(server);
-  console.log(`socket.io server listening on port ${port}`);
+export default function () {
+  this.nuxt.hook('listen', async (server, { host, port }) => {
+    let io = socket(server);
+    console.log(`socket.io server listening on ${host}:${port}`);
 
-  // io.on
-  io.on('connection', (socket) => {
-    console.log(`new connection from ${socket.handshake.address}`);
+    io.on('connection', (socket) => {
+      switch (socket.handshake.address) {
+        case process.env.JETSON_IP_ADDRESS:
+          socketIDs['jetson'] = socket.id;
+          console.log('new connection from jetson');
 
-    socket.on('person_detected', () => {
-      socket.broadcast.emit('person_detected');
-    });
+          socket.on('detected', () => {
+            socket.broadcast.to(socketIDs['raspberry']).emit('detected');
+          });
+          break;
+        case process.env.RASPBERRY_IP_ADDRESS:
+          socketIDs['raspberry'] = socket.id;
+          console.log('new connection from raspberry');
 
-    socket.on('alarm', () => {
-      console.log('alarm');
+          socket.on('identify', async (data) => {
+            socket.emit('employee', await verify(data.id));
+          });
+
+          socket.on('alarm', () => {
+            console.log('alarm!');
+          });
+          break;
+        default:
+          console.log(
+            `new connection from unknown IP ${socket.handshake.address}`
+          );
+      }
     });
   });
 }
-
-module.exports = { emit, setup };

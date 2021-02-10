@@ -3,7 +3,8 @@ let development = process.env.NODE_ENV != 'production';
 export default {
   // Server property : https://fr.nuxtjs.org/docs/2.x/configuration-glossary/configuration-server/
   server: {
-    host: development ? 'localhost' : '0.0.0.0',
+    host: development ? 'localhost' : process.env.HOST,
+    port: development ? 3000 : parseInt(process.env.PORT),
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -61,15 +62,15 @@ export default {
     '@nuxtjs/auth-next',
     // https://github.com/nuxt-community/style-resources-module#readme
     '@nuxtjs/style-resources',
-
-    // custom server module in order to setup socket.io
-    // https://fr.nuxtjs.org/docs/2.x/directory-structure/modules/
-    '~/server/setup',
+    // custom socket io module
+    '~/server/io',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: development ? 'http://localhost:3000' : 'http://172.16.16.25:3000',
+    baseURL: development
+      ? 'http://localhost:3000'
+      : `http://${process.env.HOST}:${process.env.PORT}`,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -123,18 +124,5 @@ export default {
         // autoLogout: false
       },
     },
-  },
-
-  // https://nuxt-socket-io.netlify.app/configuration
-  io: {
-    sockets: [
-      // Required
-      {
-        // At least one entry is required
-        name: 'socket',
-        url: 'http://localhost:3000/io',
-        default: true,
-      },
-    ],
   },
 };
