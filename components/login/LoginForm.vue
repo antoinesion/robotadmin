@@ -39,7 +39,6 @@ export default {
           data: this.form,
         })
         .catch((err) => {
-          console.log(err.data);
           this.errorMessage = err.response.data.message;
         });
     },

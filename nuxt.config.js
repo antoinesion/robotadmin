@@ -1,4 +1,11 @@
+let development = process.env.NODE_ENV !== 'production';
+
 export default {
+  // Server property : https://fr.nuxtjs.org/docs/2.x/configuration-glossary/configuration-server/
+  server: {
+    host: development ? 'localhost' : '0.0.0.0',
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'robotadmin',
@@ -61,7 +68,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: development ? 'http://localhost:3000' : 'http://172.16.16.25:3000',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
