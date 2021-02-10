@@ -2,6 +2,7 @@ const socket = require('socket.io');
 const dotenv = require('dotenv');
 const Employee = require('../models/Employee');
 const socketIDs = {};
+var raspberryStatus = 0;
 
 dotenv.config();
 
@@ -34,7 +35,9 @@ export default function () {
           console.log('new connection from jetson');
 
           socket.on('detected', () => {
-            socket.broadcast.to(socketIDs['raspberry']).emit('detected');
+            socket.broadcast
+              .to(socketIDs['raspberry'][socketIDs['raspberry'].length - 1])
+              .emit('detected');
           });
 
           socket.on('disconnect', () => {
@@ -42,8 +45,14 @@ export default function () {
           });
           break;
         case process.env.RASPBERRY_IP_ADDRESS:
-          socketIDs['raspberry'] = socket.id;
-          console.log('new connection from raspberry');
+          if (!socket['raspberry']) {
+            socketIDs['raspberry'] = [socket.id];
+          } else {
+            socketIDs['raspberry'].push(socket.id);
+          }
+          console.log(
+            `new connection from raspberry #${socketIDs['raspberry'].length}`
+          );
 
           socket.on('identify', async (data) => {
             const employee = await verify(data.id);
@@ -58,7 +67,10 @@ export default function () {
           });
 
           socket.on('disconnect', () => {
-            console.log('raspberry disconnected');
+            socketIDs['raspberry'].pop();
+            console.log(
+              `raspberry #${socketIDs['raspberry'].length} disconnected`
+            );
           });
           break;
         case process.env.SERVER_IP_ADDRESS:
