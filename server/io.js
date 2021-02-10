@@ -63,7 +63,6 @@ export default function () {
           });
 
           socket.on('disconnect', () => {
-            socketIDs['raspberry'];
             console.log(`raspberry disconnected`);
           });
           break;
