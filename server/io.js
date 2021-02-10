@@ -46,7 +46,11 @@ export default function () {
           console.log('new connection from raspberry');
 
           socket.on('identify', async (data) => {
-            socket.emit('employee', await verify(data.id));
+            const employee = await verify(data.id);
+            socket.emit('employee', employee);
+            if (employee) {
+              socket.broadcast.to(socketIDs['jetson']).emit('identified');
+            }
           });
 
           socket.on('alarm', () => {

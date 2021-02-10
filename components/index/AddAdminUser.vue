@@ -27,7 +27,7 @@
     />
     <label>
       <div>
-        <img src="../../assets/icons/super-admin.svg" />
+        <img :src="require('../../assets/icons/super-admin.svg')" />
         <span>Super admin </span>
       </div>
       <input
