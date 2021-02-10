@@ -6,7 +6,6 @@ const socketIDs = {};
 dotenv.config();
 
 async function verify(id) {
-  console.log(id);
   try {
     const employee = await Employee.findOne({ id: id });
     if (employee) {
@@ -37,6 +36,10 @@ export default function () {
           socket.on('detected', () => {
             socket.broadcast.to(socketIDs['raspberry']).emit('detected');
           });
+
+          socket.on('disconnect', () => {
+            console.log('jetson disconnected');
+          });
           break;
         case process.env.RASPBERRY_IP_ADDRESS:
           socketIDs['raspberry'] = socket.id;
@@ -49,10 +52,26 @@ export default function () {
           socket.on('alarm', () => {
             console.log('alarm!');
           });
+
+          socket.on('disconnect', () => {
+            console.log('raspberry disconnected');
+          });
+          break;
+        case process.env.SERVER_IP_ADDRESS:
+          socketIDs['server'] = socket.id;
+          console.log('new connection from server');
+
+          socket.on('position', (data) => {
+            console.log(data);
+          });
+
+          socket.on('disconnect', () => {
+            console.log('server disconnected');
+          });
           break;
         default:
           console.log(
-            `new connection from unknown IP ${socket.handshake.address}`
+            `/!\\ new connection from unknown IP ${socket.handshake.address}`
           );
       }
     });
