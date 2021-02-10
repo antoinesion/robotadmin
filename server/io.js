@@ -45,14 +45,11 @@ export default function () {
           console.log('new connection from raspberry');
 
           socket.on('waiting', () => {
-            console.log(`changing raspberry id to: ${socket.id}`);
+            console.log(`switching raspberry id to: ${socket.id}`);
             socketIDs['raspberry'] = socket.id;
           });
 
           socket.on('identify', async (data) => {
-            console.log(`changing raspberry id to: ${socket.id}`);
-            socketIDs['raspberry'] = socket.id;
-
             const employee = await verify(data.id);
             socket.emit('employee', employee);
 
