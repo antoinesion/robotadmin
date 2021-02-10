@@ -14,7 +14,11 @@ function setup(server, port) {
     console.log(`new connection from ${socket.handshake.address}`);
 
     socket.on('person_detected', () => {
-      console.log('person_detected');
+      socket.broadcast.emit('person_detected');
+    });
+
+    socket.on('alarm', () => {
+      console.log('alarm');
     });
   });
 }

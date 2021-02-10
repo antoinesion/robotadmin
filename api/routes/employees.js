@@ -112,7 +112,6 @@ router.delete('/delete', [loginRequired], async (req, res) => {
 
 // VERIFY
 router.post('/verify', async (req, res) => {
-  console.log(req.body);
   const id = req.body.id;
   if (!id) {
     return res
@@ -123,8 +122,7 @@ router.post('/verify', async (req, res) => {
   try {
     const employee = await Employee.findOne({ id: req.body.id });
     if (employee) {
-      console.log('identified');
-      io.emit('identified');
+      io.emit('person_identified');
       return res.status(200).send({
         firstName: employee.firstName,
         lastName: employee.lastName,
