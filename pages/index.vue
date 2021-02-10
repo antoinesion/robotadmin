@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <img :src="require('../assets/img/map.png')" />
     <div class="side-container">
       <MenuSelector />
       <MenuContainer v-if="selectedMenu" />
@@ -35,6 +36,14 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
+
+  > img {
+    position: absolute;
+    top: 0;
+    left: 20%;
+    height: 100%;
+    width: auto;
+  }
 
   .side-container {
     position: absolute;
