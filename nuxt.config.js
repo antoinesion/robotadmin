@@ -32,7 +32,10 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/request'],
+  plugins: [
+    // axios middleware to handle auth tokens
+    '~/plugins/request',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -51,8 +54,10 @@ export default {
     '@nuxtjs/auth-next',
     // https://github.com/nuxt-community/style-resources-module#readme
     '@nuxtjs/style-resources',
-    // https://nuxt-socket-io.netlify.app/
-    'nuxt-socket-io',
+
+    // custom server module in order to setup socket.io
+    // https://fr.nuxtjs.org/docs/2.x/directory-structure/modules/
+    '~/server/setup',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

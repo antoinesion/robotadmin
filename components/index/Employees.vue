@@ -7,17 +7,8 @@
 </template>
 
 <script>
-import EmployeesList from './EmployeesList';
-import AddEmployee from './AddEmployee';
-import ModifyEmployee from './ModifyEmployee';
-
 export default {
   name: 'Employees',
-  components: {
-    EmployeesList,
-    AddEmployee,
-    ModifyEmployee,
-  },
   computed: {
     employeeActualMenu: function () {
       return this.$store.state.employees.employeeActualMenu;

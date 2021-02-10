@@ -22,6 +22,11 @@ export default {
       return this.$store.state.menu.selectedMenu;
     },
   },
+  created() {
+    this.$get('/api/logs/fetch').then((res) => {
+      this.$store.commit('logs/setLogs', res.data);
+    });
+  },
 };
 </script>
 

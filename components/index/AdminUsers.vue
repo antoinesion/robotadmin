@@ -6,15 +6,8 @@
 </template>
 
 <script>
-import AdminUsersList from './AdminUsersList';
-import AddAdminUser from './AddAdminUser';
-
 export default {
   name: 'AdminUsers',
-  components: {
-    AdminUsersList,
-    AddAdminUser,
-  },
   computed: {
     showAddAdminUser: function () {
       return this.$store.state.adminUsers.showAddAdminUser;

@@ -1,5 +1,6 @@
 <template>
   <div class="menu-container">
+    <Logs v-if="selectedMenu == 'logs'" />
     <Employees v-if="selectedMenu == 'employees'" />
     <AdminUsers v-if="selectedMenu == 'admin-users'" />
     <Settings v-if="selectedMenu == 'settings'" />
@@ -7,15 +8,8 @@
 </template>
 
 <script>
-import Settings from './Settings';
-import AdminUsers from './AdminUsers';
-
 export default {
   name: 'MenuContainer',
-  components: {
-    Settings,
-    AdminUsers,
-  },
   computed: {
     selectedMenu: function () {
       return this.$store.state.menu.selectedMenu;

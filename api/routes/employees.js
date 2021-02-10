@@ -3,10 +3,8 @@ const Employee = require('../../models/Employee');
 const employeeValidator = require('../../validators/employeeValidator');
 const { loginRequired } = require('../../middleware/authMiddleware');
 
-router.use([loginRequired]);
-
 // FETCH
-router.get('/fetch', async (req, res) => {
+router.get('/fetch', [loginRequired], async (req, res) => {
   const employees = await Employee.find({});
   res.send(
     employees.map((employee) => {
@@ -22,7 +20,7 @@ router.get('/fetch', async (req, res) => {
 });
 
 // REGISTER
-router.post('/register', async (req, res) => {
+router.post('/register', [loginRequired], async (req, res) => {
   // validate register data
   const { error } = employeeValidator(req.body);
   if (error) {
@@ -57,7 +55,7 @@ router.post('/register', async (req, res) => {
 });
 
 // MODIFY
-router.put('/modify', async (req, res) => {
+router.put('/modify', [loginRequired], async (req, res) => {
   try {
     const employee = await Employee.findById(req.body._id);
     if (employee) {
@@ -95,7 +93,7 @@ router.put('/modify', async (req, res) => {
 });
 
 // DELETE
-router.delete('/delete', async (req, res) => {
+router.delete('/delete', [loginRequired], async (req, res) => {
   try {
     const employee = await Employee.findById(req.body._id);
     if (employee) {
@@ -112,6 +110,30 @@ router.delete('/delete', async (req, res) => {
 });
 
 // VERIFY
-// TODO (loginRequired => req.path != '/verify')
+router.post('/verify', async (req, res) => {
+  console.log(req.body);
+  const id = req.body.id;
+  if (!id) {
+    return res
+      .status(400)
+      .send({ path: ['id'], message: 'Employee id is missing' });
+  }
+
+  try {
+    const employee = await Employee.findOne({ id: req.body.id });
+    if (employee) {
+      // TODO: inform Jetson
+      return res.status(200).send({
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        email: employee.email,
+      });
+    } else {
+      return res.status(404).send({ path: 'id', message: 'Wrong employee id' });
+    }
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+});
 
 module.exports = router;

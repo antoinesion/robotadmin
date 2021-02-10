@@ -83,6 +83,7 @@ div {
 
     div {
       display: flex;
+      margin-bottom: $basic-margin;
 
       button {
         height: 1.8rem;
@@ -107,7 +108,7 @@ div {
 
   ul {
     list-style-type: none;
-    height: 350px;
+    height: $basic-list-height;
     overflow-y: scroll;
     width: 100%;
     border: 1px solid $lightgray;
@@ -118,7 +119,7 @@ div {
       flex-wrap: wrap;
       justify-content: space-around;
       align-content: space-around;
-      height: 3.5rem;
+      height: 3.2rem;
 
       &:nth-child(even) {
         background-color: #e6e6e6;

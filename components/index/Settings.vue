@@ -6,15 +6,8 @@
 </template>
 
 <script>
-import SettingsActions from './SettingsActions';
-import ChangePassword from './ChangePassword';
-
 export default {
   name: 'Settings',
-  components: {
-    SettingsActions,
-    ChangePassword,
-  },
   computed: {
     showChangePassword: function () {
       return this.$store.state.settings.showChangePassword;

@@ -22,7 +22,7 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.11.13",
     "nuxt": "^2.14.12",
-    "nuxt-socket-io": "1.1.13"
+    "socket.io": "2.x"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",

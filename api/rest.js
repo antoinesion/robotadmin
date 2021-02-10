@@ -47,6 +47,8 @@ app.use(express.json());
 // routes
 const auth = require('./routes/auth');
 app.use('/auth', auth);
+const logs = require('./routes/logs');
+app.use('/logs', logs);
 const adminUsers = require('./routes/users');
 app.use('/admin-users', adminUsers);
 const employees = require('./routes/employees');
