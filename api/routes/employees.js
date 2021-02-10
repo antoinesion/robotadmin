@@ -122,7 +122,9 @@ router.post('/verify', async (req, res) => {
 
   try {
     const employee = await Employee.findOne({ id: req.body.id });
+    console.log(employee);
     if (employee) {
+      console.log('identified');
       io.emit('identified');
       return res.status(200).send({
         firstName: employee.firstName,
