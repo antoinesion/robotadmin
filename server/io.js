@@ -66,10 +66,8 @@ export default function () {
           });
 
           socket.on('disconnect', () => {
-            socketIDs['raspberry'].pop();
-            console.log(
-              `raspberry #${socketIDs['raspberry'].length + 1} disconnected`
-            );
+            socketIDs['raspberry'];
+            console.log(`raspberry disconnected`);
           });
           break;
         case process.env.SERVER_IP_ADDRESS:
