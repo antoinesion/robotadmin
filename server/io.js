@@ -8,10 +8,10 @@ function setup(server, port) {
   // io.on
   io.on('connection', (socket) => {
     console.log(`new connection from ${socket.handshake.address}`);
-  });
 
-  io.on('person_detected', () => {
-    console.log('person_detected');
+    socket.on('person_detected', () => {
+      console.log('person_detected');
+    });
   });
 }
 
