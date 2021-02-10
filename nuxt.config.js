@@ -1,4 +1,4 @@
-let development = process.env.NODE_ENV !== 'production';
+let development = process.env.NODE_ENV != 'production';
 
 export default {
   // Server property : https://fr.nuxtjs.org/docs/2.x/configuration-glossary/configuration-server/

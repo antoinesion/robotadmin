@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Employee = require('../../models/Employee');
 const employeeValidator = require('../../validators/employeeValidator');
 const { loginRequired } = require('../../middleware/authMiddleware');
-const { io } = require('../../server/io');
+const io = require('../../server/io');
 
 // FETCH
 router.get('/fetch', [loginRequired], async (req, res) => {
@@ -122,7 +122,6 @@ router.post('/verify', async (req, res) => {
 
   try {
     const employee = await Employee.findOne({ id: req.body.id });
-    console.log(employee);
     if (employee) {
       console.log('identified');
       io.emit('identified');
