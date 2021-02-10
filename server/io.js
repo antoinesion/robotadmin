@@ -34,9 +34,7 @@ export default function () {
           console.log('new connection from jetson');
 
           socket.on('detected', () => {
-            socket.broadcast
-              .to(socketIDs['raspberry'][socketIDs['raspberry'].length - 1])
-              .emit('detected');
+            socket.broadcast.to(socketIDs['raspberry']).emit('detected');
           });
 
           socket.on('disconnect', () => {
