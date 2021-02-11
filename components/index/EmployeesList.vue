@@ -119,7 +119,8 @@ div {
       flex-wrap: wrap;
       justify-content: space-around;
       align-content: space-around;
-      height: 3.2rem;
+      height: 4rem;
+      padding: 0.4rem 0;
 
       &:nth-child(even) {
         background-color: #e6e6e6;
@@ -131,18 +132,19 @@ div {
 
       span {
         line-height: 1.3rem;
+        height: 1.3rem;
         font-size: $basic-font-size;
         overflow: hidden;
         text-overflow: ellipsis;
 
         &:nth-child(1),
         &:nth-child(2) {
-          width: 25%;
+          width: 20%;
         }
 
         &:nth-child(3),
         &:nth-child(4) {
-          width: 45%;
+          width: 50%;
         }
       }
 
