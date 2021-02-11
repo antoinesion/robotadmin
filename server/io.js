@@ -76,7 +76,7 @@ export default function () {
               io.emit(
                 'log',
                 await registerLog(
-                  'The detected person has been identified',
+                  `The detected person has been identified: ${employee.firstName} ${employee.lastName}`,
                   'info'
                 )
               );
@@ -87,7 +87,10 @@ export default function () {
           socket.on('alarm', async () => {
             io.emit(
               'log',
-              await registerLog('Intruder has been detected!', 'alert')
+              await registerLog(
+                'An intruder has been detected! Dialing 911...',
+                'alert'
+              )
             );
           });
 

@@ -72,6 +72,7 @@ div {
         width: 100%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         img {
           width: 1rem;
@@ -79,7 +80,7 @@ div {
         }
 
         p {
-          width: 92%;
+          width: 91%;
           font-size: 0.8rem;
         }
       }
@@ -88,6 +89,7 @@ div {
         width: fit-content;
         color: $lightgray;
         font-size: 0.8rem;
+        margin-right: $basic-margin;
       }
     }
   }
