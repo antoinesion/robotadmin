@@ -11,6 +11,7 @@
 <script>
 import MenuSelector from '../components/index/MenuSelector';
 import MenuContainer from '../components/index/MenuContainer';
+const io = require('socket.io-client');
 
 export default {
   components: {
@@ -24,6 +25,10 @@ export default {
     },
   },
   created() {
+    const socket = io();
+    socket.on('log', (log) => {
+      this.$store.commit('logs/newLog', log);
+    });
     this.$get('/api/logs/fetch').then((res) => {
       this.$store.commit('logs/setLogs', res.data);
     });

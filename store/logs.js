@@ -9,4 +9,8 @@ export const mutations = {
     }
     state.logs = logs;
   },
+  newLog: (state, log) => {
+    log.date = new Date(log.date);
+    state.logs.unshift(log);
+  },
 };

@@ -1,6 +1,7 @@
 const socket = require('socket.io');
 const dotenv = require('dotenv');
 const Employee = require('../models/Employee');
+const Log = require('../models/Log');
 const socketIDs = {};
 
 dotenv.config();
@@ -22,6 +23,20 @@ async function verify(id) {
   }
 }
 
+async function registerLog(content, type) {
+  const log = new Log({
+    content,
+    type,
+  });
+  await log.save();
+  return {
+    _id: log._id,
+    content: log.content,
+    type: log.type,
+    date: log.date,
+  };
+}
+
 export default function () {
   this.nuxt.hook('listen', async (server, { host, port }) => {
     let io = socket(server);
@@ -33,7 +48,11 @@ export default function () {
           socketIDs['jetson'] = socket.id;
           console.log('new connection from jetson');
 
-          socket.on('detected', () => {
+          socket.on('detected', async () => {
+            io.emit(
+              'log',
+              await registerLog('Person detected near the robot', 'warning')
+            );
             socket.broadcast.to(socketIDs['raspberry']).emit('detected');
           });
 
@@ -80,7 +99,7 @@ export default function () {
           break;
         default:
           console.log(
-            `/!\\ new connection from unknown IP ${socket.handshake.address}`
+            `new connection from client IP ${socket.handshake.address}`
           );
       }
     });
