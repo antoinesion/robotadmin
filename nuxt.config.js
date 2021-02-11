@@ -26,7 +26,8 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Raleway&display=swap',
+        href:
+          'https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap',
       },
     ],
   },
