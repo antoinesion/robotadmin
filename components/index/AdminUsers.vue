@@ -34,7 +34,7 @@ export default {
 
     &.show {
       transition-delay: 0s, 0.4s;
-      max-height: 400px;
+      max-height: 450px;
       opacity: 1;
       pointer-events: auto;
     }
