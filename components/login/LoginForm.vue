@@ -59,7 +59,7 @@ form {
 
   h1 {
     color: $white;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
   }
 
