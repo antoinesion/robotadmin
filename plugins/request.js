@@ -1,12 +1,10 @@
-const axios = require('axios');
-
 export default ({ app }, inject) => {
   // axios get request global method
   inject('get', async (url) => {
     if (app.$auth.loggedIn && app.$auth.strategy.token.status().expired()) {
       await app.$auth.refreshTokens();
     }
-    return axios.get(
+    return app.$axios.get(
       url,
       app.$auth.loggedIn
         ? {
@@ -22,7 +20,7 @@ export default ({ app }, inject) => {
     if (app.$auth.loggedIn && app.$auth.strategy.token.status().expired()) {
       await app.$auth.refreshTokens();
     }
-    return axios.post(
+    return app.$axios.post(
       url,
       data,
       app.$auth.loggedIn
@@ -39,7 +37,7 @@ export default ({ app }, inject) => {
     if (app.$auth.loggedIn && app.$auth.strategy.token.status().expired()) {
       await app.$auth.refreshTokens();
     }
-    return axios.put(
+    return app.$axios.put(
       url,
       data,
       app.$auth.loggedIn
@@ -56,7 +54,7 @@ export default ({ app }, inject) => {
     if (app.$auth.loggedIn && app.$auth.strategy.token.status().expired()) {
       await app.$auth.refreshTokens();
     }
-    return axios.delete(
+    return app.$axios.delete(
       url,
       app.$auth.loggedIn
         ? {
