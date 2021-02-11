@@ -6,12 +6,12 @@
       title="Show logs"
       @click="onClick('logs')"
     ></button>
-    <button
+    <!-- <button
       id="control"
       :class="{ selected: selectedMenu == 'control' }"
       title="Control the robot"
       @click="onClick('control')"
-    ></button>
+    ></button> -->
     <button
       id="employees"
       :class="{ selected: selectedMenu == 'employees' }"

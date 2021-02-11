@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="login">
-    <h1>Administration</h1>
+    <h1>Secu'Bot - Administration</h1>
     <p class="error-message" :class="{ show: errorMessage }">
       {{ errorMessage }}
     </p>
@@ -59,7 +59,7 @@ form {
 
   h1 {
     color: $white;
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
 

@@ -19,6 +19,11 @@ export default {
     MenuContainer,
   },
   middleware: 'auth',
+  head() {
+    return {
+      title: "Secu'Bot - Administration",
+    };
+  },
   computed: {
     selectedMenu: function () {
       return this.$store.state.menu.selectedMenu;

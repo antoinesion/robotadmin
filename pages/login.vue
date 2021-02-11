@@ -11,6 +11,11 @@ export default {
   components: {
     LoginForm,
   },
+  head() {
+    return {
+      title: "Secu'Bot - Identification",
+    };
+  },
   created() {
     if (this.$auth.loggedIn) {
       this.$router.replace({ name: 'index' });

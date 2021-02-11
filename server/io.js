@@ -46,7 +46,7 @@ export default function () {
       switch (socket.handshake.address) {
         case process.env.JETSON_IP_ADDRESS:
           socketIDs['jetson'] = socket.id;
-          console.log('new connection from jetson');
+          console.log('[socket.io] new connection from jetson');
 
           socket.on('detected', async () => {
             io.emit(
@@ -57,14 +57,14 @@ export default function () {
           });
 
           socket.on('disconnect', () => {
-            console.log('jetson disconnected');
+            console.log('[socket.io] jetson disconnected');
           });
           break;
         case process.env.RASPBERRY_IP_ADDRESS:
-          console.log('new connection from raspberry');
+          console.log('[socket.io] new connection from raspberry');
 
           socket.on('waiting', () => {
-            console.log(`switching raspberry id to: ${socket.id}`);
+            console.log(`[socket.io] switching raspberry id to: ${socket.id}`);
             socketIDs['raspberry'] = socket.id;
           });
 
@@ -95,24 +95,24 @@ export default function () {
           });
 
           socket.on('disconnect', () => {
-            console.log(`raspberry disconnected`);
+            console.log(`[socket.io] raspberry disconnected`);
           });
           break;
         case process.env.SERVER_IP_ADDRESS:
           socketIDs['server'] = socket.id;
-          console.log('new connection from server');
+          console.log('[socket.io] new connection from server');
 
           socket.on('position', (data) => {
             console.log(data);
           });
 
           socket.on('disconnect', () => {
-            console.log('server disconnected');
+            console.log('[socket.io] server disconnected');
           });
           break;
         default:
           console.log(
-            `new connection from client IP ${socket.handshake.address}`
+            `[socket.io] new connection from client IP ${socket.handshake.address}`
           );
       }
     });
