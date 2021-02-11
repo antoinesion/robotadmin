@@ -7,7 +7,15 @@
           <img :src="require(`../../assets/icons/${log.type}.svg`)" />
           <p>{{ log.content }}</p>
         </div>
-        <span>{{ log.date.toLocaleString('fr-FR', { timeZone: 'CET' }) }}</span>
+        <span v-if="log.date.getDate() == today"
+          >Today, {{ log.date.toLocaleTimeString('en-US') }}</span
+        >
+        <span v-else-if="log.date.getDate() == yesterday"
+          >Yesterday, {{ log.date.toLocaleTimeString('en-US') }}</span
+        >
+        <span v-else>{{
+          log.date.toLocaleString('en-US', { timeZone: 'CET' })
+        }}</span>
       </li>
     </ul>
   </div>
@@ -20,9 +28,15 @@ export default {
     logs: function () {
       return this.$store.state.logs.logs;
     },
-  },
-  created() {
-    // TODO: socket io to get new logs
+    today: function () {
+      let todayDate = new Date();
+      return todayDate.getDate();
+    },
+    yesterday: function () {
+      let yesterdayDate = new Date();
+      yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+      return yesterdayDate.getDate();
+    },
   },
 };
 </script>

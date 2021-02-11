@@ -73,12 +73,22 @@ export default function () {
             socket.emit('employee', employee);
 
             if (employee) {
+              io.emit(
+                'log',
+                await registerLog(
+                  'The detected person has been identified',
+                  'info'
+                )
+              );
               socket.broadcast.to(socketIDs['jetson']).emit('identified');
             }
           });
 
-          socket.on('alarm', () => {
-            console.log('alarm!');
+          socket.on('alarm', async () => {
+            io.emit(
+              'log',
+              await registerLog('Intruder has been detected!', 'alert')
+            );
           });
 
           socket.on('disconnect', () => {
