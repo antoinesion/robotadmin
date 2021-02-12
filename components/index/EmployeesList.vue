@@ -11,12 +11,12 @@
       <li v-for="employee in employees" :key="employee._id">
         <span>{{ employee.firstName }}</span>
         <span>{{ employee.lastName }}</span>
-        <span>{{ employee.id }}</span>
-        <span>{{ employee.email }}</span>
         <button
           title="Modify employee"
           @click="modifyEmployee(employee)"
         ></button>
+        <span>{{ employee.id }}</span>
+        <span>{{ employee.email }}</span>
         <button
           title="Delete employee"
           @click="deleteEmployee(employee._id)"
@@ -63,6 +63,7 @@ export default {
 div {
   button {
     all: unset;
+    box-sizing: border-box;
     border-radius: $basic-border-radius;
     opacity: $no-hover-opacity;
     cursor: pointer;
@@ -114,13 +115,12 @@ div {
     border: 1px solid $lightgray;
 
     li {
+      width: 100%;
       display: flex;
-      flex-direction: column;
       flex-wrap: wrap;
       justify-content: space-around;
       align-content: space-around;
-      height: 4rem;
-      padding: 0.4rem 0;
+      padding: $basic-padding 0;
 
       &:nth-child(even) {
         background-color: #e6e6e6;
@@ -131,20 +131,18 @@ div {
       }
 
       span {
-        line-height: 1.3rem;
-        height: 1.3rem;
         font-size: $basic-font-size;
         overflow: hidden;
         text-overflow: ellipsis;
 
         &:nth-child(1),
-        &:nth-child(2) {
-          width: 20%;
+        &:nth-child(4) {
+          width: 25%;
         }
 
-        &:nth-child(3),
-        &:nth-child(4) {
-          width: 50%;
+        &:nth-child(2),
+        &:nth-child(5) {
+          width: 55%;
         }
       }
 
@@ -152,9 +150,10 @@ div {
         width: 1.3rem;
         height: 1.3rem;
 
-        &:nth-child(5) {
+        &:nth-child(3) {
           background: no-repeat center/55% url('../../assets/icons/modify.svg'),
             $darkgray;
+          margin-bottom: $basic-margin;
         }
 
         &:nth-child(6) {
